@@ -5,6 +5,22 @@ window.addEventListener("DOMContentLoaded", (event) => {
 
   const active = true;
 
+  const isRequired = value => value === '' ? true : false;
+  const valueLenght = (length, min, max) => length < min || length > max ? false : true;
+  function validateStr() {
+    const re = new RegExp(/^[\w]+$/[A-Za-z])
+    return re.test()
+  }
+
+  // function checkDate() {
+  //   let valid = false 
+
+  //   let birthday = new Date(document.getElementById('dob').value)
+  //   const today = new Date()
+
+  //   if(today - birthday)
+  // }
+
   if(localStorage) {
     form.addEventListener("submit", (e) => {
       e.preventDefault();
@@ -51,17 +67,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
   }
 });
 
-// function editRow() {
-//   firstName;
-// }
 
-// function checkStr() {
-//   let str = "";
 
-//   str.regex();
-// }
 
-function validateStr(str) {
-  const re = /^[\w]+$/
-  return re.test()
-}
+
