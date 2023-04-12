@@ -1,7 +1,7 @@
 window.addEventListener("DOMContentLoaded", (event) => {
-  const form = document.querySelector("#form");
-  const btn = document.querySelector("button");
-  const tb = document.querySelector("tbody");
+  const formEl = document.querySelector("#form");
+  const tbodyEl = document.querySelector("tbody");
+  const tableEl = document.querySelector("table");
 
   const active = true;
 
@@ -12,59 +12,67 @@ window.addEventListener("DOMContentLoaded", (event) => {
     return re.test()
   }
 
-  // function checkDate() {
-  //   let valid = false 
+function store() {
+  const firstName = document.getElementById("first_name").value;
+  const lastName = document.getElementById("last_name").value;
+  const dateOfBirth = document.getElementById("dob").value;
+  const dateOfJoin = document.getElementById("doj").value;
+  localStorage,setItem("store", JSON.stringify(firstName, lastName, dateOfBirth, dateOfJoin))
+  JSON.parse(localStorage.getItem("store"))
+}
 
-  //   let birthday = new Date(document.getElementById('dob').value)
-  //   const today = new Date()
 
-  //   if(today - birthday)
-  // }
 
-  if(localStorage) {
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const firstName = document.getElementById("first_name");
-      const lastName = document.getElementById("last_name");
-      const dateOfBirth = document.getElementById("dob");
-      const dateOfJoin = document.getElementById("doj");
-      localStorage.setItem("userInfo", firstName, lastName, dateOfBirth, dateOfJoin);
-      localStorage.getItem("userInfo");
-    
-      if (firstName === " " || lastName === " ") {
-        alert("Please fill all fields");
-      } else {
-        const fnRow = document.createElement("td");
-        fnRow.id = "fnRow";
-        const lnRow = document.createElement("td");
-        fnRow.id = "lnRow";
-        const dobRow = document.createElement("td");
-        fnRow.id = "dobRow";
-        const dojRow = document.createElement("td");
-        fnRow.id = "dojRow";
-  
-        fnRow.innerHTML = firstName.value;
-        lnRow.innerHTML = lastName.value;
-        dobRow.innerHTML = dateOfBirth.value;
-        dojRow.innerHTML = dateOfJoin.value;
-        tb.append(fnRow, lnRow, dobRow, dojRow);
-  
-        const editBtn = document.createElement("button");
-        const delBtn = document.createElement("button");
-        editBtn.innerHTML = "edit";
-        delBtn.innerHTML = "remove";
-  
-        editBtn.addEventListener("click", (e) => {});
-        delBtn.addEventListener("click", (e) => {
-          e.target.parent;
-        });
-        tb.append(editBtn, delBtn);
-        if (editBtn === active) {
-        }
+function onAddTable(e) {
+  e.preventDefault();
+  const firstName = document.getElementById("first_name").value;
+  const lastName = document.getElementById("last_name").value;
+  const dateOfBirth = document.getElementById("dob").value;
+  const dateOfJoin = document.getElementById("doj").value;
+  const birthDate = new Date(dateOfBirth.value)
+      const today = new Date()
+      if(today.getFullYear() - birthDate.getFullYear() < 18 || today.getMonth() - birthDate.getMonth() > 65 ){
+        alert("User is not allowed must be older than 17")
       }
 
-    });
+  tbodyEl.innerHTML += `
+    <tr>
+    <td>${firstName}</td>
+    <td>${lastName}</td>
+    <td>${dateOfBirth}</td>
+    <td>${dateOfJoin}</td>
+    <td><button class="del_Btn">Remove</button></td>
+    <td><button class="edit_Btn">Edit</button></td>
+    </tr>
+  `;
+}
+
+function deleteRow(e) {
+  e.preventDefault()
+  if(!e.target.classList.contains("del_Btn")) {
+    return
   }
+  const btn = e.target;
+  btn.closest('tr').remove();
+  alert(" row as been delete")
+}
+
+function editRow(e) {
+  if(e.target.classList.contains("edit_Btn")) { 
+    const btn = e.target;
+    btn.closest('tr').change(document.getElementById('edit_Btn'))
+  }
+
+}
+
+
+if(!store) {
+    return;
+  }
+  formEl.addEventListener("submit", onAddTable);
+  tableEl.addEventListener("click", deleteRow);
+  tableEl.addEventListener("click", editRow);
+
 });
 
 

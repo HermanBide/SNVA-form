@@ -61,9 +61,21 @@ input[type=submit]:hover {
 
 .form {
     display: block;
+    width: 500px;
+    margin: 20px auto;
 }
 
 .infoRow {
     display: grid;
     align-items: center;
+}
+
+table {
+    border-collapse: collapse;
+    text-align: center;
+}
+
+table td, table th {
+    border: solid 1px black;
+    padding: 10px;
 }
