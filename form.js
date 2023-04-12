@@ -61,7 +61,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
 //   str.regex();
 // }
 
-// function validateStr(str) {
-//   if(typeof str === "undefined" || str === null) return false;
-//   test.(/^[\w]+$/)
-// }
+function validateStr(str) {
+  const re = /^[\w]+$/
+  return re.test()
+}
