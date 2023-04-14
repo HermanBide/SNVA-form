@@ -17,13 +17,13 @@
   <body>
     <h1>Personal Details</h1>
     <div class="container">
-      <form class="form_container" id="form" action="">
+      <form class="form_container" id="form" onsubmit="formSubmit()">
         <div class="form-field">
-            <label>First Name: </label>
+            <label for="firstname">First Name: </label>
           <input
             type="text"
-            name="first_name"
-            id="first_name"
+            name="firstname"
+            id="firstname"
             placeholder="first name"
             minlength="3"
             pattern="[A-Za-z]*"
@@ -31,11 +31,11 @@
           />
         </div>
         <div class="form-field">
-            <label>Last Name: </label>
+            <label for="lastname">Last Name: </label>
           <input
             type="text"
-            name="last_name"
-            id="last_name"
+            name="lastname"
+            id="lastname"
             placeholder="last name"
             minlength="3"
             pattern="[A-Za-z]*"
@@ -43,22 +43,21 @@
           />
         </div>
         <div class="form-field">
-            <label>Date of Birth: </label>
+            <label for="birthdate">Date of Birth: </label>
           <input
             type="date"
-            name="dob"
-            id="dob"
+            name="birthdate"
+            id="birthdate"
             placeholder="date of birth"
             required
           />
         </div>
         <div class="form-field">
-            <label>Date of Joining: </label>
+            <label for="joindate">Date of Joining: </label>
           <input
             type="date"
-            name="doj"
-            id="doj"
-            value=""
+            name="joindate"
+            id="joindate"
             placeholder="date of joining"
             required
           />
@@ -68,12 +67,14 @@
     </div>
     <br />
     <div class="display">
-      <table>
+      <table id="data_table">
         <thead>
-          <th>firstName |</th>
-          <th>lastName | </th>
-          <th>date of birth |</th>
-          <th>date of join |</th>
+          <tr>
+            <th>firstName |</th>
+            <th>lastName | </th>
+            <th>date of birth |</th>
+            <th>date of join |</th>
+          </tr>
         </thead>
         <tbody id="infoRow"></tbody>
       </table>

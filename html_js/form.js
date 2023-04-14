@@ -1,70 +1,63 @@
-window.addEventListener("DOMContentLoaded", (event) => {
-  const formEl = document.querySelector("#form");
-  const tbodyEl = document.querySelector("tbody");
-  const tableEl = document.querySelector("table")[0];
+const selectedRow = null;
 
-  // function validateStr() {
-  //   const re = new RegExp(/^[\w]+$/[A-Za-z])
-  //   return re.test()
-  // }
+function formSubmit(e) {
+  event.preventDefault();
+  const viewformData = readformData();
+  if (selectedRow === null) {
+    insertData(viewformData);
+  } else {
+    updateRow(formData);
+  }
+}
+// const todayDate = new Date();
+// const userBirthdate = new Date(formData["birthdate"]);
+// while (userBirthdate.getFullYear() - todayDate.getFullYear() >= 18) {
+// }
 
-  const storeInfo = []
-
-  function store(tableEl) {
-    localStorage, setItem("store", JSON.stringify(tableEl));
-    JSON.parse(localStorage.getItem("store"));
+  function readformData() {
+    const formData = {};
+    formData["firstname"] = document.getElementById("firstname").value;
+    formData["lastname"] = document.getElementById("lastname").value;
+    formData["birthdate"] = document.getElementById("birthdate").value;
+    formData["joindate"] = document.getElementById("joindate").value;
+    return formData;
   }
 
-  function onAddTable(e) {
-    e.preventDefault();
-    const firstName = document.getElementById("first_name").value;
-    const lastName = document.getElementById("last_name").value;
-    const dateOfBirth = document.getElementById("dob").value;
-    const dateOfJoin = document.getElementById("doj").value;
-    const birthDate = new Date(dateOfBirth.value);
-    const today = new Date();
-    if (
-      today.getFullYear() - birthDate.getFullYear() < 18
-    ) {
-      alert("User is not allowed must be older than 17");
-    }
+function insertData(data) {
+  const tableEl = document
+    .getElementById("data_table")
+    .getElementsByTagName("tbody")[0];
+  const newRow = tableEl.insertRow(tableEl.length);
+  const cell = newRow.insertCell(0);
+  cell.innerHTML = data.firstname;
+  const cell1 = newRow.insertCell(1);
+  cell1.innerHTML = data.lastname;
+  const cell2 = newRow.insertCell(2);
+  cell2.innerHTML = data.birthdate;
+  const cell3 = newRow.insertCell(3);
+  cell3.innerHTML = data.joindate;
+  const cell4 = newRow.insertCell(4);
+  cell4.innerHTML = `<button onClick="updateRow(this)">Edit</button> <button onClick="removeRow(this)">Remove</button>`;
+}
 
-    storeInfo.push(firstName, dateOfBirth, birthDate, lastName)
+function editRow(td) {
+  selectedRow = td.parentElement.parentElement;
+  document.getElementById("firstname").value = selectedRow.cells[0].innerHTML;
+  document.getElementById("lastname").value = selectedRow.cells[1].innerHTML;
+  document.getElementById("birthdate").value = selectedRow.cells[2].innerHTML;
+  document.getElementById("joindate").value = selectedRow.cells[3].innerHTML;
+}
 
-    const row = document.createElement("tr");
-    row.innerHTML += `
-    <td id="editable">${firstName}</td>
-    <td id="editable">${lastName}</td>
-    <td id="editable">${dateOfBirth}</td>
-    <td id="editable">${dateOfJoin}</td>
-    <td><button class="del_Btn">Remove</button></td>
-    <td><button class="edit_Btn" onClick='editRow(${i})'>Edit</button></td>
-    </tr>
-  `;
-  tbodyEl.appendChild(row);
+function updateRow(formData) {
+  selectedRow.cells[0].innerHTML = formData.firstname;
+  selectedRow.cells[1].innerHTML = formData.lastname;
+  selectedRow.cells[2].innerHTML = formData.birthdate;
+  selectedRow.cells[3].innerHTML = formData.joindate;
+}
+
+function removeRow(td) {
+  if (confirm("Do you want to remove this row?")) {
+    row = td.parentElement.parentElement;
+    document.getElementById("data_table").deleteRow(row.rowIndex);
   }
-
-  function deleteRow(e) {
-    e.preventDefault();
-    if (!e.target.classList.contains("del_Btn")) {
-      return;
-    }
-    const btn = e.target;
-    btn.closest("tr").remove();
-  }
-
-
-  function editRow(i) {
-    if (e.target.classList.contains("edit_Btn")) {
-      return;
-    }
-    document.getElementById("editable"+ i).classList.add("")
-  }
-
-  if (!store) {
-    return;
-  }
-  formEl.addEventListener("submit", sessionStorage.setItem('store',onAddTable));
-  tableEl.addEventListener("click", deleteRow);
-  tableEl.addEventListener("click", editRow);
-});
+}
